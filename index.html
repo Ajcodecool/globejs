@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ye Globe Stage — Interactive 3D Simulation</title>
+    <meta
+      name="description"
+      content="A WebGL concert stage built on a rotating Earth: dramatic lighting, drifting haze, audience phone-lights and brass beams — with a live music player."
+    />
+    <meta name="theme-color" content="#000000" />
+  </head>
+  <body>
+    <canvas id="scene" aria-label="3D globe stage simulation"></canvas>
+
+    <!-- Loading veil -->
+    <div id="loader" class="loader">
+      <div class="loader__label">Loading Experience</div>
+      <div class="loader__track"><div class="loader__bar" id="loader-bar"></div></div>
+      <div class="loader__note" id="loader-note">warming up the stage</div>
+    </div>
+
+    <!-- Title block -->
+    <header id="title" class="ui-layer title">
+      <h1 class="title__main">Globe Stage</h1>
+      <p class="title__sub">Interactive 3D Simulation</p>
+      <div class="show-clock" aria-label="Concert timeline">
+        <span id="show-clock-time">8:58:00 PM</span>
+        <span id="show-clock-status">SUNSET · CONCERT AT 9:00 PM</span>
+      </div>
+    </header>
+
+    <!-- Control panel (rows are generated from src/ui.js) -->
+    <aside id="panel" class="panel" aria-label="Simulation controls">
+      <div class="panel__head">
+        <span class="panel__title">Stage Console</span>
+        <span class="panel__fps" id="fps">– fps</span>
+      </div>
+      <div class="panel__body" id="panel-body"></div>
+      <p class="panel__hints">
+        <span><kbd>drag</kbd> orbit</span>
+        <span><kbd>scroll</kbd> zoom</span>
+        <span><kbd>space</kbd> play</span>
+        <span><kbd>p</kbd> pause</span>
+        <span><kbd>m</kbd> mute</span>
+        <span><kbd>r</kbd> reset</span>
+        <span><kbd>h</kbd> hide ui</span>
+      </p>
+      <div class="panel__foot" id="panel-foot">three.js • vite</div>
+    </aside>
+
+    <!-- Music player -->
+    <footer
+      id="player"
+      class="player"
+      data-playing="false"
+      data-muted="false"
+      data-needs-gesture="false"
+      aria-label="Music player"
+    >
+      <div class="player__bar">
+        <img id="player-cover" class="player__cover" alt="" width="56" height="56" />
+
+        <div class="player__meta">
+          <span class="player__title" id="player-title">—</span>
+          <span class="player__artist" id="player-artist">—</span>
+        </div>
+
+        <div class="player__transport">
+          <button type="button" id="player-prev" class="icon-btn" aria-label="Previous track">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M6 5h2.2v14H6zM20 5v14l-11-7z" />
+            </svg>
+          </button>
+
+          <button
+            type="button"
+            id="player-play"
+            class="icon-btn icon-btn--play"
+            aria-label="Play"
+          >
+            <svg class="icon-play" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M8 5v14l11-7z" />
+            </svg>
+            <svg class="icon-pause" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M7 5h4v14H7zM13 5h4v14h-4z" />
+            </svg>
+          </button>
+
+          <button type="button" id="player-next" class="icon-btn" aria-label="Next track">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M15.8 5H18v14h-2.2zM4 5l11 7-11 7z" />
+            </svg>
+          </button>
+        </div>
+
+        <div class="player__volume">
+          <button type="button" id="player-mute" class="icon-btn" aria-label="Mute">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M4 9h3.2L12 5v14L7.2 15H4zM15.4 8.6a4.8 4.8 0 0 1 0 6.8l-1-1a3.4 3.4 0 0 0 0-4.8z" />
+            </svg>
+          </button>
+          <input
+            id="player-volume"
+            type="range"
+            min="0"
+            max="1"
+            step="0.01"
+            value="0.8"
+            aria-label="Volume"
+          />
+        </div>
+      </div>
+
+      <div class="player__timeline">
+        <span id="player-elapsed">0:00</span>
+        <input
+          id="player-seek"
+          type="range"
+          min="0"
+          max="1000"
+          step="1"
+          value="0"
+          aria-label="Seek"
+        />
+        <span id="player-duration">0:00</span>
+      </div>
+
+      <ol class="tracklist" id="player-tracklist" aria-label="Tracklist"></ol>
+    </footer>
+
+    <!-- Shown only if WebGL is unavailable -->
+    <div id="fatal" class="fatal" hidden></div>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
