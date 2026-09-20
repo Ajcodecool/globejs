@@ -34,6 +34,6 @@ export const stronger = {
     { at: 47, effect: 'redFlash' },
     { at: 47, effect: 'redPyro' },
     { at: 49, effect: 'goldenFountains' },
-    { at: 53, effect: 'spin', speed: 2 },
+    { at: 47, effect: 'spin', speed: 4 },
   ],
 };
